@@ -1,2 +1,2 @@
 # Uvod u programiranje: Zbirka zadataka iz programskog jezika C
-Rešenja zadataka iz zbirke "Uvod u programiranje: Zbirka zadataka iz programskog jezika C". Ovde se nalaze i rešenja samostalnih zadataka koja nisu data u knjizi. Neki zadaci su urađeni drugačije nego što je napisano u zbirci. Tekstove zadataka možete pročitati u knjizi koju toplo preporučujem. Autori zbirke su Milan Škarić i Viktor Radović.
+Rešenja zadataka iz zbirke "Uvod u programiranje: Zbirka zadataka iz programskog jezika C". Ovde se nalaze i rešenja samostalnih zadataka koja nisu data u knjizi. Neki zadaci su urađeni drugačije nego što je napisano u zbirci. Tekstove zadataka možete pročitati u istoimenoj zbirci, koju toplo preporučujem. Autori zbirke su Milan Škarić i Viktor Radović.
