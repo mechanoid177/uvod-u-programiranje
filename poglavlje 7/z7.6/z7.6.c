@@ -55,8 +55,16 @@ int main(int argc, char **argv){
     }
 
     i = 0;
-    while((fgets(s1, 100, f1) != NULL) && (fgets(s2, 100, f2) != NULL)){
-        if(strcmpi(s1, s2) != 0){
+    while(1)
+    {
+        s1[0] = s2[0] = '\0';
+        fgets(s1, 100, f1);
+        fgets(s2, 100, f2);
+
+        if (s1[0] == '\0' && s2[0] == '\0') break;
+
+        if(strcmpi(s1, s2) != 0)
+        {
             printf("Datoteke se razlikuju po %d. redu:\n\n", i + 1);
             printf("- %d. red datoteke %s:\n%s\n- %d. red datoteke %s:\n%s\n",
                    i + 1,
@@ -69,9 +77,11 @@ int main(int argc, char **argv){
             j = 1;
             break;
         }
+
         i++;
     }
-    if(j != 1) printf("Datoteke su iste\n");
+
+    if(!j) printf("Datoteke su iste\n");
 
     fclose(f1);
     fclose(f2);

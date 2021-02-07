@@ -28,7 +28,7 @@ void file_create(char *file_name, char* mode, int n_args, ...){
 int main(int argc, char **argv){
     FILE *fajl;
     char s[100], c[100][100], ulaz[100][100];
-    int i, max = 0, pom, j = 0;
+    int max = 0, pom, j = 0, br;
 
     if(argc < 2){
         printf("Nedovoljno argumenata!!!\n");
@@ -36,26 +36,31 @@ int main(int argc, char **argv){
     }
 
     printf("Unesite sadrzaj:\n");
-    for(i = 0; (fgets(ulaz[i], 100, stdin) != NULL) && i < 10; i++)
+    for(int i = 0; (fgets(ulaz[i], 100, stdin) != NULL) && i < 10; i++)
         file_create(argv[1], "a", 1, ulaz[i]);
 
     if((fajl = fopen(argv[1], "r")) == NULL){
         printf("Greska pri otvaranju datoteke!!!\n");
         exit(102);
     }
-    printf("1\n");
+
     while(fgets(s, 100, fajl) != NULL){
-        if((pom = strlen(s)) > max){
-            strcpy(c, s);
+        pom = strlen(s);
+        if(pom > max){
+            for (int i = 0; i < 100; i++)
+                c[i][0] = '\0';
+            br = 0;
+            strcpy(c[br++], s);
             max = pom;
         }
         else if(pom == max){
-            strcpy(c, s);
+            strcpy(c[br++], s);
             max = pom;
         }
     }
 
-    printf("%s\n", c);
+    for (int i = 0; i < br; i++)
+        printf("%s", c[i]);
 
     fclose(fajl);
     return 0;
