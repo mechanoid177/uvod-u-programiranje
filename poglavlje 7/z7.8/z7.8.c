@@ -25,9 +25,21 @@ void citaj_fajl(FILE *f){
 void sifruj_cezar(FILE *f){
     int ch;
     while((ch = getc(f)) != EOF){
-        if('a' <= ch && ch <= 'z') ungetc('a' + (ch - 'a' + 3) % 26, f);
-        else if('A' <= ch && ch <= 'Z') ungetc('A' + (ch - 'A' + 3) % 26, f);
-        getc(f);
+        if('a' <= ch && ch <= 'z')
+        {
+            printf("%c\n", ch);
+            //ch = 'a' + (ch - 'a' + 3) % 26;
+            ch += 3;
+            printf("%c\n", ch);
+            //fseek(f, -1, SEEK_CUR);
+            putc('x', f);
+        }
+        else if('A' <= ch && ch <= 'Z')
+        {
+            ch = 'A' + (ch - 'A' + 3) % 26;
+            fseek(f, -1, SEEK_CUR);
+            putc(ch, f);
+        }
     }
     fseek(f, 0, SEEK_SET);
 }
@@ -43,15 +55,16 @@ void desifruj_cezar(FILE *f){
     fseek(f, 0, SEEK_SET);
 }
 
-int main(){
+int main(int argc, char **argv){
     FILE *f;
     char ulaz[100][100];
     int i;
 
+    printf("Unesite sadrzaj datoteke:\n");
     for(i = 0; fgets(ulaz[i], 100, stdin) != NULL && i < 100; i++)
-        create_file("f.txt", "a", ulaz[i]);
+        create_file(argv[1], "a", ulaz[i]);
 
-    if((f = fopen("f.txt", "r+")) == NULL){
+    if((f = fopen(argv[1], "r+")) == NULL){
         printf("Greska pri otvaranju datoteke!!!\n");
         exit(101);
     }
@@ -65,21 +78,21 @@ int main(){
 
     sifruj_cezar(f);
 
-    printf("Sadrzaj datoteke posle sifrovanja:\n");
-    for(i = 0; i < 100; i++) printf("-");
-    printf("\n");
-    citaj_fajl(f);
-    for(i = 0; i < 100; i++) printf("-");
-    printf("\n\n");
-
-    desifruj_cezar(f);
-
-    printf("Sadrzaj datoteke posle desifrovanja:\n");
-    for(i = 0; i < 100; i++) printf("-");
-    printf("\n");
-    citaj_fajl(f);
-    for(i = 0; i < 100; i++) printf("-");
-    printf("\n\n");
+//    printf("Sadrzaj datoteke posle sifrovanja:\n");
+//    for(i = 0; i < 100; i++) printf("-");
+//    printf("\n");
+//    citaj_fajl(f);
+//    for(i = 0; i < 100; i++) printf("-");
+//    printf("\n\n");
+//
+//    desifruj_cezar(f);
+//
+//    printf("Sadrzaj datoteke posle desifrovanja:\n");
+//    for(i = 0; i < 100; i++) printf("-");
+//    printf("\n");
+//    citaj_fajl(f);
+//    for(i = 0; i < 100; i++) printf("-");
+//    printf("\n\n");
 
     fclose(f);
     return 0;

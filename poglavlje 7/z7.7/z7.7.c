@@ -30,16 +30,22 @@ int main(int argc, char **argv){
     n = atoi(argv[3]);
 
     for(j = 1; j <= 2; j++)
-        for(i = 0; fgets(ulaz[i], 100, stdin) != NULL; i++){
+    {
+        printf("Unesite sadrzaj %i. datoteke:\n", j);
+        for(i = 0; fgets(ulaz[i], 100, stdin) != NULL; i++)
+        {
             create_file(argv[j], "a+", ulaz[i]);
         }
+    }
 
-    if((f1 = fopen(argv[1], "r")) == NULL){
+    if((f1 = fopen(argv[1], "r")) == NULL)
+    {
         printf("Greska pri otvaranju prve datoteke!!!\n");
         exit(102);
     }
 
-    if((f2 = fopen(argv[2], "a")) == NULL){
+    if((f2 = fopen(argv[2], "a")) == NULL)
+    {
         printf("Greska pri otvaranju druge datoteke!!!\n");
         exit(103);
     }
