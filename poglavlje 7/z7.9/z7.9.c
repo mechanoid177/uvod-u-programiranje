@@ -23,7 +23,7 @@ void swap(int *x, int *y) {
 
 void bubble_sort(int niz[], int *n) {
    int i, j;
-   for (i = 0; i < n-1; i++)
+   for (i = 0; i < *n-1; i++)
        for (j = 0; j < *n-i-1; j++)
            if (niz[j] > niz[j+1])
               swap(&niz[j], &niz[j+1]);
@@ -41,6 +41,12 @@ int main(int argc, char **argv) {
     char ulaz[100][100], br[100];
     int i, niz[100];
 
+    if(argc < 2){
+        printf("Nedovoljno argumenata!!!\n");
+        exit(101);
+    }
+
+    printf("Unesite sadrzaj datoteke:\n");
     for(i = 0; fgets(ulaz[i], 100, stdin) != NULL && i < 100; i++)
         create_file(argv[1], "a", ulaz[i]);
 

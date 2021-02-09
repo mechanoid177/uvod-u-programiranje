@@ -16,10 +16,10 @@ void create_file(char *ime_fajla, char *opcija, char *string){
     f = NULL;
 }
 
-void ispisi_mat(int mat[][100], int *n) {
-    int i, j;
-    for(i = 0; i < *n; i++) {
-        for(j = 0; j < *n; j++)
+void ispisi_mat(int mat[][100], int n[])
+{
+    for(int i = 0; i < n[0]; i++) {
+        for(int j = 0; j < n[1]; j++)
             printf("%i ", mat[i][j]);
         printf("\n");
     }
@@ -27,10 +27,16 @@ void ispisi_mat(int mat[][100], int *n) {
 
 int main(int argc, char **argv) {
     FILE *f;
-    char ulaz[100][100], br[100], ch;
-    int i, j, n[2], m1[100][100], m2[100][100], s = 0;
+    char ulaz[100][100];
+    int n[4], m[2][100][100];
 
-    for(i = 0; fgets(ulaz[i], 100, stdin) != NULL && i < 100; i++)
+    if(argc < 2){
+        printf("Nedovoljno argumenata!!!\n");
+        exit(101);
+    }
+
+    printf("Unesite sadrzaj datoteke:\n");
+    for(int i = 0; fgets(ulaz[i], 100, stdin) != NULL && i < 100; i++)
         create_file(argv[1], "a", ulaz[i]);
 
     if( (f = fopen(argv[1], "r")) == NULL ) {
@@ -38,41 +44,19 @@ int main(int argc, char **argv) {
         exit(101);
     }
 
-    for(i = 0; i < 2; i++) {
-        fgets(br, 100, f);
-        n[i] = atoi(br);
-    }
+    fscanf(f, "%i %i", n[0], n[1]);
+    fscanf(f, "%i %i", n[2], n[3]);
 
-    for(i = 0; i <= n[0]; i++) {
-        for(j = 0; j <= n[0]; j++) {
-            do {
-                ch = fgetc(f);
-                if( (ch == ' ') || (ch == '\n') ) {
-                    m1[i][j] = s;
-                    s = 0;
-                    break;
-                }
-                s += ch - '0';
-            }while(ch != EOF);
-        }
-    }
-    ispisi_mat(m1, &n[0]);
+    for (int k = 0; k < 2; k++)
+        for (int i = 0; i < n[(k == 0)?k:k+1]; i++)
+            for (int j = 0; j < n[(k == 0)?k+1:k+2]; j++)
+                fscanf(f, "%i", m[k][i][j]);
 
-    s = 0;
-    for(i = 0; i <= n[1]; i++) {
-        for(j = 0; j <= n[1]; j++) {
-            do {
-                ch = fgetc(f);
-                if( (ch == ' ') || (ch == '\n') ) {
-                    m2[i][j] = s;
-                    s = 0;
-                    break;
-                }
-                s += ch - '0';
-            }while(ch != EOF);
-        }
-    }
-    ispisi_mat(m2, &n[1]);
+
+
+    ispisi_mat(m[1], n);
+    ispisi_mat(m[2], &n[2]);
+
 
     fclose(f);
     return 0;

@@ -21,6 +21,12 @@ int main(int argc, char **argv) {
     char ulaz[100][100], br[100];
     int i, god;
 
+    if(argc < 2){
+        printf("Nedovoljno argumenata!!!\n");
+        exit(101);
+    }
+
+    printf("Unesite sadrzaj datoteke:\n");
     for(i = 0; fgets(ulaz[i], 100, stdin) != NULL && i < 100; i++)
         create_file(argv[1], "a", ulaz[i]);
 
