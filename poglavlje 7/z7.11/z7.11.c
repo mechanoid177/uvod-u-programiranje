@@ -16,19 +16,31 @@ void create_file(char *ime_fajla, char *opcija, char *string){
     f = NULL;
 }
 
-void ispisi_mat(int mat[][100], int n[])
+void ispisi_mat(int mat[][100], int* n)
 {
-    for(int i = 0; i < n[0]; i++) {
-        for(int j = 0; j < n[1]; j++)
+    for(int i = 0; i < *n; i++) {
+        for(int j = 0; j < *n; j++)
             printf("%i ", mat[i][j]);
         printf("\n");
     }
 }
 
+int sadrzi_deo(int m_manja[][100], int m_veca[][100], int n_manja, int n_veca)
+
+int sadrzi(int m_manja[][100], int m_veca[][100], int n_manja, int n_veca)
+{
+    for (int i = 0; i < n_veca - n_manja + 1; i++)
+        for (int j = 0; j < n_veca - n_manja + 1; j++)
+        {
+            if (m_manja[0][0] == m_veca[i][j] && sadrzi_deo(m_manja + i  , m_veca, n_manja, n_veca)) return 1;
+        }
+    return 0;
+}
+
 int main(int argc, char **argv) {
     FILE *f;
     char ulaz[100][100];
-    int n[4], m[2][100][100];
+    int n[2], m[2][100][100];
 
     if(argc < 2){
         printf("Nedovoljno argumenata!!!\n");
@@ -44,18 +56,17 @@ int main(int argc, char **argv) {
         exit(101);
     }
 
-    fscanf(f, "%i %i", n[0], n[1]);
-    fscanf(f, "%i %i", n[2], n[3]);
+    fscanf(f, "%i %i", &n[0], &n[1]);
 
     for (int k = 0; k < 2; k++)
-        for (int i = 0; i < n[(k == 0)?k:k+1]; i++)
-            for (int j = 0; j < n[(k == 0)?k+1:k+2]; j++)
-                fscanf(f, "%i", m[k][i][j]);
+        for (int i = 0; i < n[k]; i++)
+            for (int j = 0; j < n[k]; j++)
+                fscanf(f, "%i", &m[k][i][j]);
 
+    ispisi_mat(m[0], n);
+    ispisi_mat(m[1], &n[1]);
 
-
-    ispisi_mat(m[1], n);
-    ispisi_mat(m[2], &n[2]);
+    sadrzi(m[0], m[1], n[0], n[1]);
 
 
     fclose(f);
